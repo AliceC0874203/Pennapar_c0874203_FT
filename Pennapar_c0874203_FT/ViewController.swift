@@ -34,37 +34,26 @@ class ViewController: UIViewController {
         }
     }
     
-    func setImageResult(isCorrect: Bool) {
-        resultImageView.isHidden = false
-        if isCorrect {
-            resultImageView.image = UIImage(named: "Correct")
-        } else {
-            resultImageView.image = UIImage(named: "InCorrect")
-        }
-    }
-    
     func checkOddNumber(answerIsOdd: Bool) {
         if randomNumber % 2 == 0 { // Even
             if answerIsOdd == false {
-                results.append(ResultObj(number: randomNumber, answerIsCorrect: true, isOdd: false))
-                showAlert(message: "Yay !.. Correct answer... \n Correct answer is Even")
-                setImageResult(isCorrect: true)
+                finishCheckedAnswer(answerIsCorrect: true, isOdd: false, messageAlert: "Yay !.. Correct answer... \n Correct answer is Even")
             } else {
-                results.append(ResultObj(number: randomNumber, answerIsCorrect: false, isOdd: false))
-                showAlert(message: "Oops.. Wrong answer... \n Correct answer is Even")
-                setImageResult(isCorrect: false)
+                finishCheckedAnswer(answerIsCorrect: false, isOdd: false, messageAlert: "Oops.. Wrong answer... \n Correct answer is Even")
             }
         } else { // Odd
             if answerIsOdd == true {
-                results.append(ResultObj(number: randomNumber, answerIsCorrect: true, isOdd: true))
-                showAlert(message: "Yay !.. Correct answer... \n Correct answer is Odd")
-                setImageResult(isCorrect: true)
+                finishCheckedAnswer(answerIsCorrect: true, isOdd: true, messageAlert: "Yay !.. Correct answer... \n Correct answer is Odd")
             } else {
-                results.append(ResultObj(number: randomNumber, answerIsCorrect: false, isOdd: true))
-                showAlert(message: "Oops.. Wrong answer... \n Correct answer is Odd")
-                setImageResult(isCorrect: false)
+                finishCheckedAnswer(answerIsCorrect: false, isOdd: true, messageAlert: "Oops.. Wrong answer... \n Correct answer is Odd")
             }
         }
+    }
+    
+    func finishCheckedAnswer(answerIsCorrect: Bool, isOdd: Bool, messageAlert: String) {
+        results.append(ResultObj(number: randomNumber, answerIsCorrect: answerIsCorrect, isOdd: isOdd))
+        showAlert(message: messageAlert)
+        setImageResult(isCorrect: answerIsCorrect)
     }
     
     func showAlert(message: String) {
@@ -82,6 +71,15 @@ class ViewController: UIViewController {
         }))
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    func setImageResult(isCorrect: Bool) {
+        resultImageView.isHidden = false
+        if isCorrect {
+            resultImageView.image = UIImage(named: "Correct")
+        } else {
+            resultImageView.image = UIImage(named: "InCorrect")
+        }
     }
     
     func showProgressTVC() {
